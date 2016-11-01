@@ -1,3 +1,4 @@
+#include<tgmath.h>
 #ifndef linked_list
 #define linked_list
 class node
@@ -25,6 +26,10 @@ public:
     friend node* reversaliteratively(node*);
     friend node* sorting(node*);
     friend node* eliminatingdupliacatesfromsortedlinkedlist(node*);
+    friend node* mergetwosortedlinkedlist(node*,node*);
+    friend void midpoint(node*);
+    friend bool ispalindrome(node* head);
+    friend node* appendlastNelementsinfront(node*,int);
 };
 node * makinglinkedlist()
 {
@@ -334,6 +339,160 @@ node* eliminatingdupliacatesfromsortedlinkedlist(node *head)
         }
     }
     return head;
+}
+node* mergetwosortedlinkedlist(node* first,node *second)
+{
+    node* head;
+    node *prev=NULL;
+    while(first!=NULL||second!=NULL)
+    {
+        if(first!=NULL&&second!=NULL)
+        {
+            if(first->data<second->data)
+            {
+                node *newnode=new node(first->data);
+                node *k=first;
+                first=first->next;
+                delete k;
+                if(prev==NULL)
+                {
+                    head=newnode;
+                    prev=newnode;
+                }
+                else
+                {
+                    prev->next=newnode;
+                    prev=newnode;
+                }
+            }
+            else
+            {
+                 node *newnode=new node(second->data);
+                node *k=second;
+                second=second->next;
+                delete k;
+                if(prev==NULL)
+                {
+                    head=newnode;
+                    prev=newnode;
+                }
+                else
+                {
+                    prev->next=newnode;
+                    prev=newnode;
+                }
+            }
+        }
+        else
+        {
+            if(first==NULL)
+            {
+                node* newnode=new node(second->data);
+                node *k=second;
+                second=second->next;
+                delete k;
+                prev->next=newnode;
+                prev=newnode;
+            }
+            else
+            {
+                node* newnode=new node(first->data);
+                node *k=first;
+                first=first->next;
+                delete k;
+                prev->next=newnode;
+                prev=newnode;
+            }
+        }
+    }
+    return head;
+}
+void midpoint(node* head)
+{
+    if(head==NULL)
+    {
+        return;
+    }
+    node* mid=head;
+    node* last=head->next;
+    while(last!=NULL)
+    {
+
+        last=last->next;
+        if(last!=NULL)
+        {
+            mid=mid->next;
+            last=last->next;
+        }
+    }
+    cout<<mid->data<<endl;
+
+}
+bool ispalindrome(node *head)
+{
+    if(head==NULL)
+    {
+        return false;
+    }
+    int i=0;
+    node* temp=head;
+    while(temp->next!=NULL)
+    {
+        i++;
+        temp=temp->next;
+    }
+    i=ceil((i+1)/2);
+    node* start=head;
+    node* end=temp;
+    while(i!=0)
+    {
+        temp=start;
+        while(temp->next!=end)
+        {
+            temp=temp->next;
+        }
+        if(temp->next->data!=start->data)
+        {
+            return false;
+        }
+        end=temp;
+        start=start->next;
+        i--;
+    }
+    return true;
+
+
+}
+node* appendlastNelementsinfront(node* head,int n)
+{
+    if(head==NULL)
+    {
+
+        return head;
+    }
+
+    node* temp=head;
+    int i=0;
+    while(temp->next!=NULL)
+    {
+        i++;
+        temp=temp->next;
+    }
+    i++;
+    node* k=temp;
+    temp=head;
+
+    while(i-n>1)
+    {
+        temp=temp->next;
+        n++;
+    }
+        k->next=head;
+    head=temp->next;
+    temp->next=NULL;
+    return head;
+
+
 }
 
 #endif // linked_list
