@@ -30,6 +30,7 @@ public:
     friend void midpoint(node*);
     friend bool ispalindrome(node* head);
     friend node* appendlastNelementsinfront(node*,int);
+    friend node* kreverse(node* head,int);
 };
 node * makinglinkedlist()
 {
@@ -494,5 +495,47 @@ node* appendlastNelementsinfront(node* head,int n)
 
 
 }
+node* kreverse(node* head,int k)
+{
+    bool y=true;
+    node* ptr=head;
+    while(ptr!=NULL)
+    {
+        node* p=ptr;
+        int i=k;
+        while(i>1&&ptr!=NULL)
+        {
+            i--;
+            ptr=ptr->next;
+        }
+        node *helper=ptr;
+        if(ptr!=NULL)
+        {
+        node *k=ptr->next;
+        ptr->next=NULL;
+        ptr=k;
+        }
+        node* newhead=reversaliteratively(p);
+        if(y==true)
+        {
+            head=newhead;
+            y=false;
+        }
+        else
+        {
+            node* p=head;
+            while(p->next!=NULL)
+            {
+                p=p->next;
+            }
+            p->next=newhead;
+        }
+
+
+
+    }
+    return head;
+}
+
 
 #endif // linked_list
