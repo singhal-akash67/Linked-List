@@ -27,13 +27,14 @@ public:
     friend node* sorting(node*);
     friend node* eliminatingdupliacatesfromsortedlinkedlist(node*);
     friend node* mergetwosortedlinkedlist(node*,node*);
+    friend node* meregetwosortedlinkedlistefficient(node*,node*);
     friend void midpoint(node*);
     friend bool ispalindrome(node* head);
-    friend helperpalindrome* midpointextra(node* head)
-    friend bool palindromebetter(node* head)
+    friend helperpalindrome* midpointextra(node* head);
+    friend bool palindromebetter(node* head);
     friend node* appendlastNelementsinfront(node*,int);
     friend node* appendlastnelementsinfrontbetter(node* head,int n)
-    friend node* nthelementfromlastforappend(node* head,int n)
+    friend node* nthelementfromlastforappend(node* head,int n);
     friend node* kreverse(node* head,int);
 };
 node * makinglinkedlist()
