@@ -29,7 +29,11 @@ public:
     friend node* mergetwosortedlinkedlist(node*,node*);
     friend void midpoint(node*);
     friend bool ispalindrome(node* head);
+    friend helperpalindrome* midpointextra(node* head)
+    friend bool palindromebetter(node* head)
     friend node* appendlastNelementsinfront(node*,int);
+    friend node* appendlastnelementsinfrontbetter(node* head,int n)
+    friend node* nthelementfromlastforappend(node* head,int n)
     friend node* kreverse(node* head,int);
 };
 node * makinglinkedlist()
@@ -408,6 +412,66 @@ node* mergetwosortedlinkedlist(node* first,node *second)
     }
     return head;
 }
+
+class helperpalindrome
+{
+public:
+    bool y;
+    node* mid;
+};
+helperpalindrome* midpointextra(node* head)
+{
+    if(head==NULL||head->next==NULL)
+        return NULL;
+    node *temp=head;
+    node *k=head->next;
+    while(k!=NULL&&k->next!=NULL)
+    {
+        temp=temp->next;
+        k=k->next;
+        if(k!=NULL)
+            k=k->next;
+    }
+helperpalindrome* newnode=new helperpalindrome();
+newnode->mid=temp;
+if(k==NULL)
+    newnode->y=false;
+else
+    newnode->y=true;
+return newnode;
+
+}
+bool palindromebetter(node* head)
+{
+    helperpalindrome *temp=midpointextra(head);
+    if (temp==NULL)
+        return true;
+    node* y=temp->mid->next; 
+    temp->mid->next=NULL;
+    if(temp->y==false)
+    {
+        node* newhead=reverselistrecursively(y);
+        node* j=newhead;
+        while(head!=temp->mid)
+        {
+            if(head->data!=newhead->data)
+            {
+                temp->mid->next=reverselistiteratively(j);
+                return false;
+
+            }
+            head=head->next;
+            newhead=newhead->next;
+
+        }
+        temp->mid->next=reverselistiteratively(j);
+        return true;
+
+
+    }
+    return false;
+
+}
 void midpoint(node* head)
 {
     if(head==NULL)
@@ -493,6 +557,46 @@ node* appendlastNelementsinfront(node* head,int n)
     temp->next=NULL;
     return head;
 
+
+}
+node* nthelementfromlastforappend(node* head,int n)
+{
+    int i=1;
+    node* temp=head;
+    while(i<n+1)
+    {
+        i++;
+        if(head!=NULL)
+            head=head->next;
+        else
+            return NULL;
+
+    }
+    if(head==NULL)
+        return NULL;
+    while(head->next!=NULL)
+    {
+        head=head->next;
+        temp=temp->next;
+    }
+    return temp;
+
+}
+node* appendlastnelementsinfrontbetter(node* head,int n)
+{
+    node* temp=nthelementfromlastforappend(head,n);
+    if(temp==NULL)
+    {
+        return NULL;
+    }
+    node *k=temp->next;
+    temp->next=NULL;
+    node *p=k;
+    while(p->next!=NULL)
+        p=p->next;
+    p=p->next=head;
+    return k;
+ 
 
 }
 node* kreverse(node* head,int k)
