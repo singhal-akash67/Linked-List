@@ -345,6 +345,63 @@ node* eliminatingdupliacatesfromsortedlinkedlist(node *head)
     }
     return head;
 }
+node* meregetwosortedlinkedlistefficient(node* head1,node* head2)
+{
+    node* tobereturned=NULL;
+    head1=sortrecursively(head1);
+    head2=sortrecursively(head2);
+    if(head2->data<head1->data)
+    {
+        node* temp=head2->next;
+        head2->next=head1;
+        head1=head2;
+        head2=temp;
+        tobereturned=head1;
+    }
+    else
+    {
+        tobereturned=head1;
+    }
+    printlist(tobereturned);
+    while((head1!=NULL&&head1->next!=NULL)||(head2!=NULL))
+    {
+
+        if((head1!=NULL&&head1->next!=NULL)&&(head2!=NULL))
+        {
+            if(head1->next->data<head2->data)
+            {
+                head1=head1->next;
+            }
+            else 
+            {
+                node *temp=head2->next;
+                node *k=head1->next;
+                head1->next=head2;
+                head2->next=k;
+                head2=temp;
+            }
+        }
+        else 
+        {
+            if(head1==NULL||head1->next==NULL)
+            {
+                node* temp=head2->next;
+                node* k=head1->next;
+                head1->next=head2;
+                head2->next=k;
+                head2=temp;
+            }
+            else
+            {
+                head1=head1->next;
+            }
+        
+
+
+        }
+    }
+    return  tobereturned;
+}
 node* mergetwosortedlinkedlist(node* first,node *second)
 {
     node* head;
